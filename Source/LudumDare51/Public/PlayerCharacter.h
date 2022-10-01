@@ -8,6 +8,7 @@
 
 class UCameraComponent;
 class UInteractionQueueComponent;
+class UKeyRingComponent;
 
 UCLASS()
 class LUDUMDARE51_API APlayerCharacter : public ACharacter
@@ -31,6 +32,9 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category=Components)
 	UInteractionQueueComponent* InteractionQueueComponent = nullptr;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category=Components)
+	UKeyRingComponent* KeyRingComponent = nullptr;
 	
 	void MoveForward(float AxisValue);
 

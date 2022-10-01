@@ -40,7 +40,7 @@ bool UKeyRingComponent::RemoveKey(const TSubclassOf<UKeyType> KeyType)
 
 bool UKeyRingComponent::HasKey(const TSubclassOf<UKeyType> KeyType) const
 {
-	const UKeyType* Key = GetKeyByClass(KeyType);
+	UKeyType* Key = GetKeyByClass(KeyType);
 
 	return Key != nullptr;
 }
@@ -50,5 +50,6 @@ UKeyType* UKeyRingComponent::GetKeyByClass(const TSubclassOf<UKeyType> KeyClass)
 	if (AcquiredKeys.Num() == 0) return nullptr;
 
 	auto Iterator = [&](const UKeyType* Key)-> bool { return Key->IsA(KeyClass); };
-	return *AcquiredKeys.FindByPredicate(Iterator);
+
+	return AcquiredKeys.FindByPredicate(Iterator) == NULL ? nullptr : *AcquiredKeys.FindByPredicate(Iterator);
 }

@@ -5,6 +5,7 @@
 
 #include "Camera/CameraComponent.h"
 #include "Components/InteractionQueueComponent.h"
+#include "Components/KeyRingComponent.h"
 
 APlayerCharacter::APlayerCharacter()
 {
@@ -13,6 +14,8 @@ APlayerCharacter::APlayerCharacter()
 	CameraComponent->SetupAttachment(GetMesh());
 	
 	InteractionQueueComponent = CreateDefaultSubobject<UInteractionQueueComponent>("InteractionComponent");
+
+	KeyRingComponent = CreateDefaultSubobject<UKeyRingComponent>("KeyRing");
 }
 
 void APlayerCharacter::BeginPlay()

@@ -39,7 +39,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category="KeyRing")
 	UKeyType* GetKeyByClass(TSubclassOf<UKeyType> KeyClass) const;
 
-private:
+protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="KeyRing", meta=(AllowPrivateAccess="true"))
 	TArray<UKeyType*> AcquiredKeys;
 };
