@@ -9,6 +9,7 @@
 class UCameraComponent;
 class UInteractionQueueComponent;
 class UKeyRingComponent;
+class UDashComponent;
 
 UCLASS()
 class LUDUMDARE51_API APlayerCharacter : public ACharacter
@@ -35,12 +36,17 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category=Components)
 	UKeyRingComponent* KeyRingComponent = nullptr;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category=Components)
+	UDashComponent* DashComponent = nullptr;
 	
 	void MoveForward(float AxisValue);
 
 	void MoveRight(float AxisValue);
 
 	void Interact();
+
+	void Dash();
 
 	virtual void Landed(const FHitResult& Hit) override;
 
@@ -53,5 +59,7 @@ private:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess="true"))
 	bool bWantCrouch = false;
+
+	FVector LateralDirection = FVector::ZeroVector;
 
 };
