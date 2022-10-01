@@ -66,4 +66,7 @@ private:
 
 	FVector LateralDirection = FVector::ZeroVector;
 
+	UFUNCTION()
+	void OnDeath();
+
 };

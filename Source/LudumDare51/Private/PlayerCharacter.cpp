@@ -8,6 +8,7 @@
 #include "Components/HealthComponent.h"
 #include "Components/InteractionQueueComponent.h"
 #include "Components/KeyRingComponent.h"
+#include "Core/Session/SessionGameMode.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/KismetSystemLibrary.h"
 
@@ -31,6 +32,7 @@ void APlayerCharacter::BeginPlay()
 	Super::BeginPlay();
 	
 	CameraInitialLocation = CameraComponent->GetRelativeLocation();
+	HealthComponent->OnDeath.AddDynamic(this, &APlayerCharacter::OnDeath);
 }
 
 void APlayerCharacter::Tick(float DeltaTime)
@@ -130,5 +132,18 @@ void APlayerCharacter::ToggleCrouch(const bool bIsCrouching, const bool bForceCr
 	}
 
 	bIsCrouching ? Crouch(false) : UnCrouch(true);
+}
+
+void APlayerCharacter::OnDeath()
+{
+	if (GetWorld())
+	{
+		ASessionGameMode* SessionGameMode = Cast<ASessionGameMode>(GetWorld()->GetAuthGameMode());
+
+		if (SessionGameMode)
+		{
+			SessionGameMode->FinishSession(false);
+		}
+	}
 }
 
