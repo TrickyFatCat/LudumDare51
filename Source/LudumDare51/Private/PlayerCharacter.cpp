@@ -4,6 +4,7 @@
 #include "PlayerCharacter.h"
 
 #include "Camera/CameraComponent.h"
+#include "Components/DashComponent.h"
 #include "Components/InteractionQueueComponent.h"
 #include "Components/KeyRingComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -18,6 +19,8 @@ APlayerCharacter::APlayerCharacter()
 	InteractionQueueComponent = CreateDefaultSubobject<UInteractionQueueComponent>("InteractionComponent");
 
 	KeyRingComponent = CreateDefaultSubobject<UKeyRingComponent>("KeyRing");
+
+	DashComponent = CreateDefaultSubobject<UDashComponent>("DashComponent");
 }
 
 void APlayerCharacter::BeginPlay()
@@ -63,6 +66,8 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	PlayerInputComponent->BindAction<FCrouchDelegate>("Crouch", IE_Pressed, this, &APlayerCharacter::ToggleCrouch, true, false);
 	PlayerInputComponent->BindAction<FCrouchDelegate>("Crouch", IE_Released, this, &APlayerCharacter::ToggleCrouch, false, false);
 
+	PlayerInputComponent->BindAction("Dash", IE_Pressed, this, &APlayerCharacter::Dash);
+
 	//Aim
 	PlayerInputComponent->BindAxis("LookUp", this, &APlayerCharacter::AddControllerPitchInput);
 	PlayerInputComponent->BindAxis("LookRight", this, &APlayerCharacter::AddControllerYawInput);
@@ -73,17 +78,33 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 
 void APlayerCharacter::MoveForward(float AxisValue)
 {
+	LateralDirection.X = AxisValue;
 	AddMovementInput(GetActorForwardVector(), AxisValue);
 }
 
 void APlayerCharacter::MoveRight(float AxisValue)
 {
+	LateralDirection.Y = AxisValue;
 	AddMovementInput(GetActorRightVector(), AxisValue);
 }
 
 void APlayerCharacter::Interact()
 {
 	InteractionQueueComponent->Interact();
+}
+
+void APlayerCharacter::Dash()
+{
+	FVector Direction = GetActorForwardVector();
+
+	if (LateralDirection != FVector::ZeroVector)
+	{
+		Direction.X = GetVelocity().GetSafeNormal().X;
+		Direction.Y = GetVelocity().GetSafeNormal().Y;
+		Direction.Z = 0.f;
+	}
+	
+	DashComponent->Dash(Direction);
 }
 
 void APlayerCharacter::Landed(const FHitResult& Hit)
