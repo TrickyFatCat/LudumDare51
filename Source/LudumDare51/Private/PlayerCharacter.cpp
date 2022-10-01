@@ -5,6 +5,7 @@
 
 #include "Camera/CameraComponent.h"
 #include "Components/DashComponent.h"
+#include "Components/HealthComponent.h"
 #include "Components/InteractionQueueComponent.h"
 #include "Components/KeyRingComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -21,6 +22,8 @@ APlayerCharacter::APlayerCharacter()
 	KeyRingComponent = CreateDefaultSubobject<UKeyRingComponent>("KeyRing");
 
 	DashComponent = CreateDefaultSubobject<UDashComponent>("DashComponent");
+
+	HealthComponent = CreateDefaultSubobject<UHealthComponent>("HealthComponent");
 }
 
 void APlayerCharacter::BeginPlay()
