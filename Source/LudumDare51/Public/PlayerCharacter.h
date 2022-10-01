@@ -7,6 +7,7 @@
 #include "PlayerCharacter.generated.h"
 
 class UCameraComponent;
+class UInteractionQueueComponent;
 
 UCLASS()
 class LUDUMDARE51_API APlayerCharacter : public ACharacter
@@ -27,9 +28,14 @@ public:
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category=Components)
 	UCameraComponent* CameraComponent = nullptr;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category=Components)
+	UInteractionQueueComponent* InteractionQueueComponent = nullptr;
 	
 	void MoveForward(float AxisValue);
 
 	void MoveRight(float AxisValue);
+
+	void Interact();
 
 };

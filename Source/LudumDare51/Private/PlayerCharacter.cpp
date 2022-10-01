@@ -4,13 +4,15 @@
 #include "PlayerCharacter.h"
 
 #include "Camera/CameraComponent.h"
+#include "Components/InteractionQueueComponent.h"
 
 APlayerCharacter::APlayerCharacter()
 {
 	PrimaryActorTick.bCanEverTick = true;
 	CameraComponent = CreateDefaultSubobject<UCameraComponent>("Camera Component");
 	CameraComponent->SetupAttachment(GetMesh());
-
+	
+	InteractionQueueComponent = CreateDefaultSubobject<UInteractionQueueComponent>("InteractionComponent");
 }
 
 void APlayerCharacter::BeginPlay()
@@ -35,6 +37,9 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	//Aim
 	PlayerInputComponent->BindAxis("LookUp", this, &APlayerCharacter::AddControllerPitchInput);
 	PlayerInputComponent->BindAxis("LookRight", this, &APlayerCharacter::AddControllerYawInput);
+
+	//Other
+	PlayerInputComponent->BindAction("Interact", IE_Pressed, this, &APlayerCharacter::Interact);
 }
 
 void APlayerCharacter::MoveForward(float AxisValue)
@@ -45,5 +50,10 @@ void APlayerCharacter::MoveForward(float AxisValue)
 void APlayerCharacter::MoveRight(float AxisValue)
 {
 	AddMovementInput(GetActorRightVector(), AxisValue);
+}
+
+void APlayerCharacter::Interact()
+{
+	InteractionQueueComponent->Interact();
 }
 
