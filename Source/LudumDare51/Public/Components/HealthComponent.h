@@ -45,13 +45,13 @@ public:
 protected:
 	virtual void BeginPlay() override;
 
-	UPROPERTY(BlueprintGetter=GetMaxHealth, Category=Health)
+	UPROPERTY(EditDefaultsOnly, BlueprintGetter=GetMaxHealth, Category=Health)
 	int32 MaxHealth = 5;
 
-	UPROPERTY(BlueprintGetter=GetCurrentHealth, Category=Health)
+	UPROPERTY(VisibleAnywhere, BlueprintGetter=GetCurrentHealth, Category=Health)
 	int32 CurrentHealth = MaxHealth;
 
-	UPROPERTY(BlueprintGetter=GetIsInvulnerable, Category=Health)
+	UPROPERTY(VisibleAnywhere, BlueprintGetter=GetIsInvulnerable, Category=Health)
 	bool bIsInvulnerable = false;
 
 public:

@@ -21,10 +21,8 @@ bool UHealthComponent::ApplyDamage(const int32 Amount)
 	{
 		OnDeath.Broadcast();
 	}
-	else
-	{
-		OnDamageTaken.Broadcast(Amount, CurrentHealth);
-	}
+	
+	OnDamageTaken.Broadcast(Amount, CurrentHealth);
 
 	return true;
 }
@@ -39,4 +37,3 @@ void UHealthComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 }
-
