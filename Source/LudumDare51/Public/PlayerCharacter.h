@@ -25,6 +25,9 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 protected:
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category=Components)
+	UCameraComponent* CameraComponent = nullptr;
+	
 	void MoveForward(float AxisValue);
 
 	void MoveRight(float AxisValue);

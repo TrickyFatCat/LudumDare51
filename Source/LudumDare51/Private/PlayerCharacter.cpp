@@ -8,7 +8,7 @@
 APlayerCharacter::APlayerCharacter()
 {
 	PrimaryActorTick.bCanEverTick = true;
-	UCameraComponent* CameraComponent = CreateDefaultSubobject<UCameraComponent>("Camera Component");
+	CameraComponent = CreateDefaultSubobject<UCameraComponent>("Camera Component");
 	CameraComponent->SetupAttachment(GetMesh());
 
 }
