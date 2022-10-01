@@ -8,7 +8,7 @@ public class LudumDare51 : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "TrickyPrototyping" });
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "TrickyPrototyping", "UMG" });
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
 
