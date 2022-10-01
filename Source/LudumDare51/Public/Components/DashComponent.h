@@ -34,8 +34,10 @@ public:
 	UFUNCTION(BlueprintGetter, Category=Dash)
 	FTimerHandle GetCooldownHandle() const;
 
-	UFUNCTION(BlueprintCallable, Category=Dash)
-	bool IsOnCooldown();
+	UFUNCTION(BlueprintPure, Category=Dash)
+	bool IsOnCooldown() const;
+
+	float GetCooldownTime() const;
 
 protected:
 	UPROPERTY()

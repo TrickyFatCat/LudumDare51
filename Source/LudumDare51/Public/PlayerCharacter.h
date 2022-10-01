@@ -10,6 +10,7 @@ class UCameraComponent;
 class UInteractionQueueComponent;
 class UKeyRingComponent;
 class UDashComponent;
+class UHealthComponent;
 
 UCLASS()
 class LUDUMDARE51_API APlayerCharacter : public ACharacter
@@ -39,6 +40,9 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category=Components)
 	UDashComponent* DashComponent = nullptr;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category=Components)
+	UHealthComponent* HealthComponent = nullptr;
 	
 	void MoveForward(float AxisValue);
 
@@ -61,5 +65,8 @@ private:
 	bool bWantCrouch = false;
 
 	FVector LateralDirection = FVector::ZeroVector;
+
+	UFUNCTION()
+	void OnDeath();
 
 };

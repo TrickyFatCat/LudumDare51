@@ -17,8 +17,14 @@ class TRICKYPROTOTYPING_API UKeyType : public UBaseObject
 
 public:
 	bool GetDestroyOnUse() const { return bDestroyOnUse; }
+
+	UFUNCTION()
+	FLinearColor GetKeyColor() const { return KeyColor; }
 	
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Key")
 	bool bDestroyOnUse = false;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Key")
+	FLinearColor KeyColor {FLinearColor::White};
 };
