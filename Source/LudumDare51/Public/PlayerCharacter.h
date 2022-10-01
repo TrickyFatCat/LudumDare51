@@ -42,4 +42,16 @@ protected:
 
 	void Interact();
 
+	virtual void Landed(const FHitResult& Hit) override;
+
+	void ToggleCrouch(const bool bIsCrouching, const bool bForceCrouch = false);
+
+private:
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Camera", meta=(AllowPrivateAccess="true"))
+	float CameraTransitionSpeed = 0.15f;
+	FVector CameraInitialLocation = FVector::ZeroVector;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess="true"))
+	bool bWantCrouch = false;
+
 };

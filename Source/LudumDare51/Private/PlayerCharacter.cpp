@@ -6,6 +6,8 @@
 #include "Camera/CameraComponent.h"
 #include "Components/InteractionQueueComponent.h"
 #include "Components/KeyRingComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
+#include "Kismet/KismetSystemLibrary.h"
 
 APlayerCharacter::APlayerCharacter()
 {
@@ -21,11 +23,31 @@ APlayerCharacter::APlayerCharacter()
 void APlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+	
+	CameraInitialLocation = CameraComponent->GetRelativeLocation();
 }
 
 void APlayerCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	
+	if (!GetCharacterMovement()->IsFalling())
+	{
+		float NewZ = 0.f;
+
+		if (GetCharacterMovement()->IsCrouching())
+		{
+			NewZ = FMath::Lerp(CameraComponent->GetRelativeLocation().Z, CrouchedEyeHeight, CameraTransitionSpeed);
+		}
+		else
+		{
+			NewZ = FMath::Lerp(CameraComponent->GetRelativeLocation().Z, BaseEyeHeight, CameraTransitionSpeed);
+		}
+
+		const FVector NewLocation = FVector(CameraInitialLocation.X, CameraInitialLocation.Y, NewZ);
+		CameraComponent->SetRelativeLocation(NewLocation);
+	}
 }
 
 void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -36,6 +58,10 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	PlayerInputComponent->BindAxis("MoveForward", this, &APlayerCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &APlayerCharacter::MoveRight);
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &APlayerCharacter::Jump);
+	
+	DECLARE_DELEGATE_TwoParams(FCrouchDelegate, const bool, const bool);
+	PlayerInputComponent->BindAction<FCrouchDelegate>("Crouch", IE_Pressed, this, &APlayerCharacter::ToggleCrouch, true, false);
+	PlayerInputComponent->BindAction<FCrouchDelegate>("Crouch", IE_Released, this, &APlayerCharacter::ToggleCrouch, false, false);
 
 	//Aim
 	PlayerInputComponent->BindAxis("LookUp", this, &APlayerCharacter::AddControllerPitchInput);
@@ -58,5 +84,27 @@ void APlayerCharacter::MoveRight(float AxisValue)
 void APlayerCharacter::Interact()
 {
 	InteractionQueueComponent->Interact();
+}
+
+void APlayerCharacter::Landed(const FHitResult& Hit)
+{
+	Super::Landed(Hit);
+
+	if (bWantCrouch)
+	{
+		ToggleCrouch(true, true);
+		bWantCrouch = false;
+	}
+}
+
+void APlayerCharacter::ToggleCrouch(const bool bIsCrouching, const bool bForceCrouch)
+{
+	if (GetMovementComponent()->IsFalling() && !bForceCrouch)
+	{
+		bWantCrouch = true;
+		return;
+	}
+
+	bIsCrouching ? Crouch(false) : UnCrouch(true);
 }
 
