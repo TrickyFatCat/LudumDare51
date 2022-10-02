@@ -54,6 +54,8 @@ void UDashComponent::Dash(const FVector& Direction)
 	GetWorld()->GetTimerManager().SetTimer(DashTimerHandle, DashTimerDelegate, DashTime , false);
 
 	GetWorld()->GetTimerManager().SetTimer(DashCooldownHandle, DashCooldown, false);
+
+	OnDashActivated.Broadcast();
 }
 
 FTimerHandle UDashComponent::GetCooldownHandle() const

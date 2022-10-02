@@ -59,6 +59,13 @@ void UHealthComponent::BeginPlay()
 void UHealthComponent::DisableInvulnerability()
 {
 	bIsInvulnerable = false;
+
+	FTimerManager& TimerManager = GetWorld()->GetTimerManager();
+
+	if (TimerManager.IsTimerActive(InvulnerabilityTimerHandle))
+	{
+		TimerManager.ClearTimer(InvulnerabilityTimerHandle);
+	}
 }
 
 void UHealthComponent::TickComponent(float DeltaTime, ELevelTick TickType,

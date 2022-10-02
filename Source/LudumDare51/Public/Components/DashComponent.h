@@ -10,6 +10,8 @@ class APlayerCharacter;
 class UCharacterMovementComponent;
 class APlayerController;
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnDashActivatedSignature);
+
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class LUDUMDARE51_API UDashComponent : public UActorComponent
 {
@@ -40,6 +42,9 @@ public:
 	float GetCooldownTime() const;
 
 	float GetDashTime() const { return DashTime; }
+
+	UPROPERTY(BlueprintAssignable, Category=Dash)
+	FOnDashActivatedSignature OnDashActivated;
 
 protected:
 	UPROPERTY()
