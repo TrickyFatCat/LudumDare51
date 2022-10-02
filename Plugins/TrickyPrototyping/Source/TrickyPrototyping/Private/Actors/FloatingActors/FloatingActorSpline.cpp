@@ -10,7 +10,7 @@ void AFloatingActorSpline::ConstructActor()
 {
 	if (!SplineActor)
 	{
-		LogError("SplineActor is nullptr. Please choose an actor with spline to use this floating actor.");
+	// LogError("SplineActor is nullptr. Please choose an actor with spline to use this floating actor.");
 		return;
 	}
 
