@@ -34,8 +34,12 @@ public:
 	UFUNCTION(BlueprintGetter, Category=Dash)
 	FTimerHandle GetCooldownHandle() const;
 
-	UFUNCTION(BlueprintCallable, Category=Dash)
-	bool IsOnCooldown();
+	UFUNCTION(BlueprintPure, Category=Dash)
+	bool IsOnCooldown() const;
+
+	float GetCooldownTime() const;
+
+	float GetDashTime() const { return DashTime; }
 
 protected:
 	UPROPERTY()
@@ -54,13 +58,13 @@ protected:
 	float DashPower = 2700.f;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	float DashCooldown = 2.f;
+	float DashCooldown = 1.25f;
 
 	UPROPERTY(BlueprintGetter=GetCooldownHandle)
 	FTimerHandle DashCooldownHandle;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	float DashTime = .25f;
+	float DashTime = .4f;
 
 	UFUNCTION()
 	void SetIsDashing(const bool bEnableDash);

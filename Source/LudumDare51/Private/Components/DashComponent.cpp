@@ -61,9 +61,14 @@ FTimerHandle UDashComponent::GetCooldownHandle() const
 	return DashCooldownHandle;
 }
 
-bool UDashComponent::IsOnCooldown()
+bool UDashComponent::IsOnCooldown() const
 {
 	return GetWorld()->GetTimerManager().IsTimerActive(DashCooldownHandle);
+}
+
+float UDashComponent::GetCooldownTime() const
+{
+	return DashCooldown;
 }
 
 void UDashComponent::SetIsDashing(const bool bEnableDash)
