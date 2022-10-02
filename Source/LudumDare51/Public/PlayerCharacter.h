@@ -11,6 +11,7 @@ class UInteractionQueueComponent;
 class UKeyRingComponent;
 class UDashComponent;
 class UHealthComponent;
+class UStunComponent;
 
 UCLASS()
 class LUDUMDARE51_API APlayerCharacter : public ACharacter
@@ -43,6 +44,9 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category=Components)
 	UHealthComponent* HealthComponent = nullptr;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category=Components)
+	UStunComponent* StunComponent = nullptr;
 	
 	void MoveForward(float AxisValue);
 
@@ -55,6 +59,12 @@ protected:
 	virtual void Landed(const FHitResult& Hit) override;
 
 	void ToggleCrouch(const bool bIsCrouching, const bool bForceCrouch = false);
+
+	UFUNCTION()
+	void OnStunStarted();
+
+	UFUNCTION()
+	void OnStunEnded();
 
 private:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Camera", meta=(AllowPrivateAccess="true"))

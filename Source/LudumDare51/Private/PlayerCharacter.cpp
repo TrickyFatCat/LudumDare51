@@ -8,6 +8,7 @@
 #include "Components/HealthComponent.h"
 #include "Components/InteractionQueueComponent.h"
 #include "Components/KeyRingComponent.h"
+#include "Components/StunComponent.h"
 #include "Core/Session/SessionGameMode.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/KismetSystemLibrary.h"
@@ -25,6 +26,8 @@ APlayerCharacter::APlayerCharacter()
 	DashComponent = CreateDefaultSubobject<UDashComponent>("DashComponent");
 
 	HealthComponent = CreateDefaultSubobject<UHealthComponent>("HealthComponent");
+
+	StunComponent = CreateDefaultSubobject<UStunComponent>("StunComponent");
 }
 
 void APlayerCharacter::BeginPlay()
@@ -33,6 +36,8 @@ void APlayerCharacter::BeginPlay()
 	
 	CameraInitialLocation = CameraComponent->GetRelativeLocation();
 	HealthComponent->OnDeath.AddDynamic(this, &APlayerCharacter::OnDeath);
+	StunComponent->OnStunApplied.AddDynamic(this, &APlayerCharacter::OnStunStarted);
+	StunComponent->OnStunEnded.AddDynamic(this, &APlayerCharacter::OnStunEnded);
 }
 
 void APlayerCharacter::Tick(float DeltaTime)
@@ -134,6 +139,17 @@ void APlayerCharacter::ToggleCrouch(const bool bIsCrouching, const bool bForceCr
 
 	bIsCrouching ? Crouch(false) : UnCrouch(true);
 }
+
+void APlayerCharacter::OnStunStarted()
+{
+	DisableInput(Cast<APlayerController>(GetController()));
+}
+
+void APlayerCharacter::OnStunEnded()
+{
+	EnableInput(Cast<APlayerController>(GetController()));
+}
+
 
 void APlayerCharacter::OnDeath()
 {
