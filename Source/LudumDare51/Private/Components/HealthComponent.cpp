@@ -21,7 +21,13 @@ bool UHealthComponent::ApplyDamage(const int32 Amount)
 	{
 		OnDeath.Broadcast();
 	}
-	
+	else
+	{
+		bIsInvulnerable = true;
+		GetWorld()->GetTimerManager().SetTimer(InvulnerabilityTimerHandle, this,
+		                                       &UHealthComponent::DisableInvulnerability, InvulnerabilityDuration);
+	}
+
 	OnDamageTaken.Broadcast(Amount, CurrentHealth);
 
 	return true;
@@ -30,6 +36,11 @@ bool UHealthComponent::ApplyDamage(const int32 Amount)
 void UHealthComponent::BeginPlay()
 {
 	Super::BeginPlay();
+}
+
+void UHealthComponent::DisableInvulnerability()
+{
+	bIsInvulnerable = false;
 }
 
 void UHealthComponent::TickComponent(float DeltaTime, ELevelTick TickType,
