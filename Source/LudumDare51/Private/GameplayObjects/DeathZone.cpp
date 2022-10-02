@@ -32,7 +32,7 @@ void ADeathZone::OnTriggerBeginOverlap(UPrimitiveComponent* OverlappedComponent,
 
 	if (!HealthComponent) return;
 
-	HealthComponent->ApplyDamage(HealthComponent->GetMaxHealth());
+	HealthComponent->Kill();
 }
 
 void ADeathZone::Tick(float DeltaTime)

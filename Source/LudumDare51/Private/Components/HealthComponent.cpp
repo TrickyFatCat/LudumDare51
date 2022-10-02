@@ -45,6 +45,12 @@ void UHealthComponent::EnableInvulnerability(const float Duration)
 	                      &UHealthComponent::DisableInvulnerability, InvulnerabilityDuration);
 }
 
+void UHealthComponent::Kill()
+{
+	DisableInvulnerability();
+	ApplyDamage(CurrentHealth);
+}
+
 void UHealthComponent::BeginPlay()
 {
 	Super::BeginPlay();
