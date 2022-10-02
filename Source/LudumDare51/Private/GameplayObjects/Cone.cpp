@@ -41,6 +41,7 @@ void ACone::OnTriggerBeginOverlap(UPrimitiveComponent* OverlappedComponent, AAct
 
 	if (HealthComponent)
 	{
+		HealthComponent->DisableInvulnerability();
 		HealthComponent->ApplyDamage(1);
 	}
 

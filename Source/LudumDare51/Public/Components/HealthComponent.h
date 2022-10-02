@@ -47,6 +47,8 @@ public:
 	UFUNCTION(BlueprintCallable, Category=Health)
 	void Kill();
 	
+	UFUNCTION()
+	void DisableInvulnerability();
 
 protected:
 	virtual void BeginPlay() override;
@@ -65,9 +67,6 @@ protected:
 
 	UPROPERTY(BlueprintReadOnly, Category=Hleath)
 	FTimerHandle InvulnerabilityTimerHandle;
-
-	UFUNCTION()
-	void DisableInvulnerability();
 
 public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType,
