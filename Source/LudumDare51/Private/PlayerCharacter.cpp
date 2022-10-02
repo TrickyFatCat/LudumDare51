@@ -108,7 +108,8 @@ void APlayerCharacter::Dash()
 		Direction.Y = GetVelocity().GetSafeNormal().Y;
 		Direction.Z = 0.f;
 	}
-	
+
+	HealthComponent->EnableInvulnerability(DashComponent->GetDashTime());
 	DashComponent->Dash(Direction);
 }
 
