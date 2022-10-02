@@ -40,6 +40,9 @@ public:
 
 	UPROPERTY(BlueprintAssignable, Category=Health)
 	FOnDamageTakenSignature OnDamageTaken;
+
+	UFUNCTION(BlueprintCallable, Category=Health)
+	void EnableInvulnerability(const float Duration);
 	
 
 protected:
@@ -51,8 +54,17 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintGetter=GetCurrentHealth, Category=Health)
 	int32 CurrentHealth = MaxHealth;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category=Health)
+	float InvulnerabilityDuration = 0.25f;
+
 	UPROPERTY(VisibleAnywhere, BlueprintGetter=GetIsInvulnerable, Category=Health)
 	bool bIsInvulnerable = false;
+
+	UPROPERTY(BlueprintReadOnly, Category=Hleath)
+	FTimerHandle InvulnerabilityTimerHandle;
+
+	UFUNCTION()
+	void DisableInvulnerability();
 
 public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType,

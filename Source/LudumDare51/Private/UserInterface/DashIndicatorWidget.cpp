@@ -11,7 +11,11 @@ void UDashIndicatorWidget::NativeOnInitialized()
 	Super::NativeOnInitialized();
 
 	const APawn* PlayerCharacter = GetOwningPlayerPawn();
-	DashComponent = PlayerCharacter->FindComponentByClass<UDashComponent>();
+
+	if (PlayerCharacter)
+	{
+		DashComponent = PlayerCharacter->FindComponentByClass<UDashComponent>();
+	}
 }
 
 float UDashIndicatorWidget::GetCooldownProgress() const

@@ -21,15 +21,38 @@ bool UHealthComponent::ApplyDamage(const int32 Amount)
 	{
 		OnDeath.Broadcast();
 	}
-	
+	else
+	{
+		EnableInvulnerability(InvulnerabilityDuration);
+	}
+
 	OnDamageTaken.Broadcast(Amount, CurrentHealth);
 
 	return true;
 }
 
+void UHealthComponent::EnableInvulnerability(const float Duration)
+{
+	FTimerManager& TimerManager = GetWorld()->GetTimerManager();
+
+	if (TimerManager.IsTimerActive(InvulnerabilityTimerHandle))
+	{
+		TimerManager.ClearTimer(InvulnerabilityTimerHandle);
+	}
+
+	bIsInvulnerable = true;
+	TimerManager.SetTimer(InvulnerabilityTimerHandle, this,
+	                      &UHealthComponent::DisableInvulnerability, InvulnerabilityDuration);
+}
+
 void UHealthComponent::BeginPlay()
 {
 	Super::BeginPlay();
+}
+
+void UHealthComponent::DisableInvulnerability()
+{
+	bIsInvulnerable = false;
 }
 
 void UHealthComponent::TickComponent(float DeltaTime, ELevelTick TickType,
