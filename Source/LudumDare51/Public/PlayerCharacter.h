@@ -12,6 +12,7 @@ class UKeyRingComponent;
 class UDashComponent;
 class UHealthComponent;
 class UStunComponent;
+class UFootstepsComponent;
 
 UCLASS()
 class LUDUMDARE51_API APlayerCharacter : public ACharacter
@@ -33,6 +34,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category=Components)
 	UCameraComponent* CameraComponent = nullptr;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category=Components)
+	UFootstepsComponent* FootstepsComponent = nullptr;
+	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category=Components)
 	UInteractionQueueComponent* InteractionQueueComponent = nullptr;
 
