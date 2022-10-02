@@ -32,4 +32,6 @@ private:
 
 	void OpenNextLevel() const;
 
+	UFUNCTION(BlueprintPure, Category="UI")
+	float GetFinalTime() const;
 };
