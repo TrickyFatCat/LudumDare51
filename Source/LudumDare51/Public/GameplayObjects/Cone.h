@@ -19,7 +19,7 @@ public:
 protected:
 	virtual void BeginPlay() override;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	float StunDuration = 0.75f;
 
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category=Components)
