@@ -40,6 +40,9 @@ public:
 
 	UPROPERTY(BlueprintAssignable, Category=Health)
 	FOnDamageTakenSignature OnDamageTaken;
+
+	UFUNCTION(BlueprintCallable, Category=Health)
+	void EnableInvulnerability(const float Duration);
 	
 
 protected:
