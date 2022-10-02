@@ -5,6 +5,7 @@
 
 #include "Camera/CameraComponent.h"
 #include "Components/DashComponent.h"
+#include "Components/FootstepsComponent.h"
 #include "Components/HealthComponent.h"
 #include "Components/InteractionQueueComponent.h"
 #include "Components/KeyRingComponent.h"
@@ -18,6 +19,9 @@ APlayerCharacter::APlayerCharacter()
 	PrimaryActorTick.bCanEverTick = true;
 	CameraComponent = CreateDefaultSubobject<UCameraComponent>("Camera Component");
 	CameraComponent->SetupAttachment(GetMesh());
+
+	FootstepsComponent = CreateDefaultSubobject<UFootstepsComponent>("FootstepsComponent");
+	FootstepsComponent->SetupAttachment(GetRootComponent());
 	
 	InteractionQueueComponent = CreateDefaultSubobject<UInteractionQueueComponent>("InteractionComponent");
 
