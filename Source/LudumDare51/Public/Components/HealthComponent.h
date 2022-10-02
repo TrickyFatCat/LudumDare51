@@ -43,6 +43,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category=Health)
 	void EnableInvulnerability(const float Duration);
+
+	UFUNCTION(BlueprintCallable, Category=Health)
+	void Kill();
 	
 
 protected:
