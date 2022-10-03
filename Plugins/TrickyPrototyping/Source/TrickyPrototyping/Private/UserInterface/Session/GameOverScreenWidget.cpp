@@ -5,6 +5,7 @@
 #include "Components/Button.h"
 #include "Kismet/GameplayStatics.h"
 #include "Core/TrickyGameInstance.h"
+#include "Core/Session/SessionGameMode.h"
 
 
 void UGameOverScreenWidget::NativeOnInitialized()
@@ -46,4 +47,16 @@ void UGameOverScreenWidget::OpenNextLevel() const
 	if (NextLevelName.IsNone()) return;
 
 	UGameplayStatics::OpenLevel(this, NextLevelName);
+}
+
+float UGameOverScreenWidget::GetFinalTime() const
+{
+	
+	if (!GetWorld()) return -1.f;
+
+	const ASessionGameMode* SessionGameMode = Cast<ASessionGameMode>(GetWorld()->GetAuthGameMode());
+
+	if (!SessionGameMode) return -1.f;
+
+	return SessionGameMode->GetFinalTime();
 }

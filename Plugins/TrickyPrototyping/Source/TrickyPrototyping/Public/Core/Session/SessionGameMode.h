@@ -83,4 +83,10 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category="Session")
 	void LoseGame() { FinishSession(false); }
+
+	UFUNCTION(BlueprintPure, Category="Session")
+	float GetFinalTime() const { return FinalTime; }
+
+protected:
+	float FinalTime = 0.f;
 };
