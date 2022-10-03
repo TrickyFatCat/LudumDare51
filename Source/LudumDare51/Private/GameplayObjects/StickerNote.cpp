@@ -20,7 +20,7 @@ AStickerNote::AStickerNote()
 void AStickerNote::OnConstruction(const FTransform& Transform)
 {
 	Super::OnConstruction(Transform);
-	NoteTextRenderer->SetText(NoteText);
+	// NoteTextRenderer->SetText(NoteText);
 }
 
 void AStickerNote::BeginPlay()
